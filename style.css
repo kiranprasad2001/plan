@@ -1,0 +1,38 @@
+body { 
+    font-family: 'Inter', sans-serif; 
+}
+.activity-card { 
+    transition: all 0.3s ease-in-out; 
+    cursor: pointer; 
+}
+.activity-card:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); 
+}
+.activity-card.completed { 
+    opacity: 0.5; 
+}
+.activity-card.completed .activity-title, 
+.activity-card.completed .activity-desc { 
+    text-decoration: line-through; 
+}
+.calendar-day.has-activity::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 4px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 5px; 
+    height: 5px; 
+    border-radius: 50%; 
+    background-color: #3b82f6; 
+}
+.modal-overlay, .loading-overlay { 
+    transition: opacity 0.3s ease-in-out; 
+}
+.modal-content { 
+    transition: transform 0.3s ease-in-out; 
+}
+.star-icon { 
+    color: #facc15; 
+}
