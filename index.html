@@ -6,36 +6,42 @@
     <title>Kindergarten Activity Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Link to the new external CSS file -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Loading Overlay -->
+    <!-- All existing HTML is the same -->
     <div id="loading-overlay" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center"><svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-4 text-gray-600">Connecting to your planner...</p></div>
-
-    <!-- Main Container -->
     <div id="app-container" class="max-w-2xl mx-auto p-4 md:p-6">
         <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-30 transform -translate-x-full transition-transform duration-300 ease-in-out"><div class="p-4"><h2 class="text-xl font-bold text-gray-900 mb-4">Yearly Plan</h2><div id="monthly-plan-links" class="space-y-2"></div></div></div>
         <div id="sidebar-overlay" class="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20 hidden"></div>
-        <header class="flex items-center justify-between mb-6">
-            <button id="menu-button" class="p-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
-            <div class="text-center"><h1 class="font-bold text-2xl text-gray-900">Hi Shashi</h1></div>
-            <button id="rewards-button" class="p-2 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg><span id="star-count-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">0</span></button>
-        </header>
-        <main id="main-view">
-            <div class="flex justify-between items-center mb-8"><div class="text-left"><p class="text-gray-500">Current Month</p><h2 id="current-month" class="text-xl font-semibold text-gray-900 cursor-pointer"></h2></div><div class="text-right"><p class="text-gray-500">Current Date</p><h2 id="current-date" class="text-xl font-semibold text-gray-900"></h2></div></div>
-            <div id="incomplete-activities-container" class="mb-8 hidden"><h3 class="text-lg font-bold text-red-600 mb-2">Pending Activities</h3><div id="incomplete-activities-list" class="space-y-4"></div></div>
-            <div id="activities-container" class="space-y-4"></div>
-            <button id="add-custom-task-button" class="mt-6 w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>Add Custom Activity</button>
-        </main>
+        <header class="flex items-center justify-between mb-6"><button id="menu-button" class="p-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button><div class="text-center"><h1 class="font-bold text-2xl text-gray-900">Hi Shashi</h1></div><button id="rewards-button" class="p-2 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg><span id="star-count-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">0</span></button></header>
+        <main id="main-view"><div class="flex justify-between items-center mb-8"><div class="text-left"><p class="text-gray-500">Current Month</p><h2 id="current-month" class="text-xl font-semibold text-gray-900 cursor-pointer"></h2></div><div class="text-right"><p class="text-gray-500">Current Date</p><h2 id="current-date" class="text-xl font-semibold text-gray-900"></h2></div></div><div id="incomplete-activities-container" class="mb-8 hidden"><h3 class="text-lg font-bold text-red-600 mb-2">Pending Activities</h3><div id="incomplete-activities-list" class="space-y-4"></div></div><div id="activities-container" class="space-y-4"></div><button id="add-custom-task-button" class="mt-6 w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>Add Custom Activity</button></main>
         <div id="calendar-view" class="hidden"><div class="flex items-center justify-between mb-4"><button id="back-to-home-button" class="p-2 rounded hover:bg-gray-100">&larr; Back to Home</button><h2 id="calendar-month-year" class="text-xl font-bold"></h2><div><button id="prev-month" class="p-2 rounded hover:bg-gray-100">&lt;</button><button id="next-month" class="p-2 rounded hover:bg-gray-100">&gt;</button></div></div><div id="calendar-grid" class="grid grid-cols-7 gap-2 text-center"></div><div id="calendar-activity-view" class="mt-6 hidden"><h3 id="calendar-activity-date" class="text-lg font-bold mb-2"></h3><div id="calendar-activity-list" class="space-y-4"></div></div></div>
         <div id="rewards-view" class="hidden"><div class="flex items-center justify-between mb-4"><button id="rewards-back-button" class="p-2 rounded hover:bg-gray-100">&larr; Back to Home</button><h2 class="text-xl font-bold">Your Rewards</h2><div class="w-8"></div></div><div class="text-center p-6 bg-white rounded-lg shadow-sm"><h3 class="text-2xl font-bold">Total Stars Collected</h3><p id="total-stars-display" class="text-6xl font-bold star-icon my-4">0</p><p class="text-gray-600">Great job! Keep up the amazing work!</p></div><div id="star-grid" class="mt-6 grid grid-cols-10 gap-2"></div></div>
     </div>
     <div id="activity-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0"><div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()"><h3 id="modal-title" class="text-xl font-bold mb-2"></h3><p id="modal-description" class="text-gray-700 whitespace-pre-wrap"></p><button id="modal-close-button" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Close</button></div></div>
     <div id="custom-task-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0"><div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()"><h3 class="text-xl font-bold mb-4">Add a Custom Activity</h3><div class="space-y-4"><input id="custom-task-title" type="text" placeholder="Activity Title (e.g., Library Trip)" class="w-full p-2 border rounded"><textarea id="custom-task-desc" placeholder="Description..." class="w-full p-2 border rounded" rows="3"></textarea><input id="custom-task-link" type="url" placeholder="Optional: Add a link (e.g., https://...)" class="w-full p-2 border rounded"></div><div class="mt-6 flex justify-end space-x-3"><button id="custom-task-cancel-button" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Cancel</button><button id="custom-task-add-button" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add Task</button></div></div></div>
+
+    <!-- NEW: Add to Calendar Modal -->
+    <div id="calendar-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()">
+            <h3 class="text-xl font-bold mb-4">Add to Your Calendar</h3>
+            <p class="text-gray-600 mb-6">Choose your preferred calendar to add this activity.</p>
+            <div class="space-y-3">
+                <button id="google-cal-button" class="w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.184 10.184h-2.228v2.228h-1.782v-2.228h-2.228V8.402h2.228V6.174h1.782v2.228h2.228v1.782zM12 2C6.486 2 2 6.486 2 12s4.486 10 10 10c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path></svg>
+                    Add to Google Calendar
+                </button>
+                <button id="apple-cal-button" class="w-full bg-gray-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M19.472 12.194c-.005-3.354 2.395-4.481 2.523-4.522a.5.5 0 0 0-.236-.662c-.23-.115-1.012-.462-2.42-.462-2.31 0-3.99 1.423-5.018 1.423-.99 0-2.42-.99-4.028-.99-2.02 0-3.844 1.188-4.793 2.96C3.99 13.541 5.34 18.99 7.64 21.46c1.152 1.23 2.41 2.54 4.14 2.54 1.69 0 2.29-.78 4.22-2.29 1.22-.96 1.8-1.92 1.83-1.95a.5.5 0 0 0-.36-.62c-.22-.05-1.8-.45-1.8-.45s.06-1.17.06-2.19c0-2.14-1.83-3.3-1.92-3.36zm-3.15-5.62c.9-1.09 1.46-2.5 1.34-3.95-.01 0-1.2.06-2.4.81-.97.6-1.8 1.8-2.03 2.85.03.01 1.4.45 2.5.45.34 0 .66-.06.89-.16z"></path></svg>
+                    Add to Apple / Other
+                </button>
+            </div>
+            <button id="calendar-modal-close-button" class="mt-6 text-sm text-gray-600 hover:underline">Cancel</button>
+        </div>
+    </div>
     
-    <!-- Link to the new external JavaScript file -->
     <script type="module" src="app.js"></script>
 </body>
 </html>

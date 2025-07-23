@@ -36,6 +36,7 @@ let currentDisplayDate = new Date();
 let activityStatus = {};
 let customTasks = {};
 let starCount = 0;
+let activeCalendarActivity = null; // To store the activity for the calendar modal
 
 // ===================================================================
 // DOM ELEMENT SELECTORS
@@ -75,6 +76,12 @@ const customTaskModal = document.getElementById('custom-task-modal');
 const modalCloseButton = document.getElementById('modal-close-button');
 const customTaskCancelButton = document.getElementById('custom-task-cancel-button');
 const customTaskAddButton = document.getElementById('custom-task-add-button');
+
+// Calendar Activity View
+const calendarModal = document.getElementById('calendar-modal');
+const googleCalButton = document.getElementById('google-cal-button');
+const appleCalButton = document.getElementById('apple-cal-button');
+const calendarModalCloseButton = document.getElementById('calendar-modal-close-button');
 
 // ===================================================================
 // CORE FUNCTIONS
@@ -206,6 +213,9 @@ function createActivityCard(activity, activityId, isCompleted, isPending = false
                 <p class="text-gray-600 truncate activity-desc">${activity.desc}</p>
             </div>
             <div class="flex items-center ml-4 flex-shrink-0">
+                <button class="add-to-calendar-btn p-2 text-gray-400 hover:text-blue-500" title="Add to Calendar">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+                </button>
                 ${activity.link ? `<a href="${activity.link}" target="_blank" class="p-2 text-gray-400 hover:text-blue-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" /></svg></a>` : ''}
                 ${isCustom ? `<button class="delete-task-btn p-2 text-gray-400 hover:text-red-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg></button>` : ''}
                 <input type="checkbox" class="task-checkbox h-6 w-6 rounded text-blue-500 ml-2" ${isCompleted ? 'checked' : ''}>
@@ -218,6 +228,10 @@ function createActivityCard(activity, activityId, isCompleted, isPending = false
     card.querySelector('.task-checkbox').addEventListener('click', (e) => {
         e.stopPropagation();
         toggleActivity(activityId, isCustom);
+    });
+    card.querySelector('.add-to-calendar-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        openCalendarModal(activity, activityId);
     });
     if (isCustom) {
         card.querySelector('.delete-task-btn').addEventListener('click', (e) => {
@@ -392,6 +406,72 @@ async function deleteCustomTask(taskId) {
 }
 
 // ===================================================================
+// CALENDAR INTEGRATION FUNCTIONS
+// ===================================================================
+function openCalendarModal(activity, activityId) {
+    // activityId is in the format "YYYY-M-D-index" or "custom_timestamp"
+    let activityDate;
+    if (activityId.startsWith('custom')) {
+        activityDate = new Date(customTasks[activityId].date.replace(/-/g, '/'));
+    } else {
+        const parts = activityId.split('-');
+        activityDate = new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+    
+    activeCalendarActivity = {
+        title: activity.title || activity.cat,
+        description: activity.desc,
+        date: activityDate
+    };
+    openModal('calendar-modal');
+}
+
+function formatGoogleDate(date) {
+    return date.toISOString().replace(/-|:|\.\d\d\d/g, "").slice(0, 8);
+}
+
+function handleGoogleCalendar() {
+    if (!activeCalendarActivity) return;
+    
+    const { title, description, date } = activeCalendarActivity;
+    const startDate = formatGoogleDate(date);
+    const endDate = formatGoogleDate(new Date(date.getTime() + 24 * 60 * 60 * 1000)); // Next day for all-day event
+    
+    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(description)}&dates=${startDate}/${endDate}`;
+    
+    window.open(url, '_blank');
+    closeModal('calendar-modal');
+}
+
+function handleAppleCalendar() {
+    if (!activeCalendarActivity) return;
+
+    const { title, description, date } = activeCalendarActivity;
+    const startDate = date.toISOString().replace(/-|:|\.\d\d\d/g, "");
+    const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d\d\d/g, "");
+
+    const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:${startDate.slice(0,8)}
+DTEND;VALUE=DATE:${endDate.slice(0,8)}
+SUMMARY:${title}
+DESCRIPTION:${description}
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${title}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    closeModal('calendar-modal');
+}
+
+// ===================================================================
 // FIREBASE FUNCTIONS
 // ===================================================================
 async function toggleActivity(activityId, isCustom = false) {
@@ -473,4 +553,10 @@ document.addEventListener('DOMContentLoaded', () => {
     customTaskModal.addEventListener('click', () => closeModal('custom-task-modal'));
     customTaskCancelButton.addEventListener('click', () => closeModal('custom-task-modal'));
     customTaskAddButton.addEventListener('click', addCustomTask);
+
+    // listeners for the new calendar modal
+    googleCalButton.addEventListener('click', handleGoogleCalendar);
+    appleCalButton.addEventListener('click', handleAppleCalendar);
+    calendarModalCloseButton.addEventListener('click', () => closeModal('calendar-modal'));
+    calendarModal.addEventListener('click', () => closeModal('calendar-modal'));
 });
