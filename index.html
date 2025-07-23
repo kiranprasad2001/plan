@@ -15,7 +15,7 @@
         .calendar-day.has-activity::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background-color: #3b82f6; }
         .modal-overlay, .loading-overlay { transition: opacity 0.3s ease-in-out; }
         .modal-content { transition: transform 0.3s ease-in-out; }
-        .star-icon { color: #facc15; } /* Yellow-400 for stars */
+        .star-icon { color: #facc15; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -25,66 +25,23 @@
 
     <!-- Main Container -->
     <div id="app-container" class="max-w-2xl mx-auto p-4 md:p-6">
-        <!-- Sidebar -->
         <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-30 transform -translate-x-full transition-transform duration-300 ease-in-out"><div class="p-4"><h2 class="text-xl font-bold text-gray-900 mb-4">Yearly Plan</h2><div id="monthly-plan-links" class="space-y-2"></div></div></div>
         <div id="sidebar-overlay" class="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20 hidden" onclick="toggleSidebar()"></div>
-
-        <!-- Header -->
-        <header class="flex items-center justify-between mb-6">
-            <button class="p-2" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
-            <div class="text-center"><h1 class="font-bold text-2xl text-gray-900">Hi Shashi</h1></div>
-            <button class="p-2 relative" onclick="showRewardsView()"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg><span id="star-count-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">0</span></button>
-        </header>
-
-        <!-- Main Content -->
-        <main id="main-view">
-            <div class="flex justify-between items-center mb-8"><div class="text-left"><p class="text-gray-500">Current Month</p><h2 id="current-month" class="text-xl font-semibold text-gray-900 cursor-pointer" onclick="showCalendarView()"></h2></div><div class="text-right"><p class="text-gray-500">Current Date</p><h2 id="current-date" class="text-xl font-semibold text-gray-900"></h2></div></div>
-            <div id="incomplete-activities-container" class="mb-8 hidden"><h3 class="text-lg font-bold text-red-600 mb-2">Incomplete from Yesterday</h3><div id="incomplete-activities-list" class="space-y-4"></div></div>
-            <div id="activities-container" class="space-y-4"></div>
-            <button onclick="openCustomTaskModal()" class="mt-6 w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>Add Custom Activity</button>
-        </main>
-
-        <!-- Calendar View -->
-        <div id="calendar-view" class="hidden"><!-- Calendar HTML remains the same --></div>
-        
-        <!-- Rewards View -->
-        <div id="rewards-view" class="hidden">
-            <div class="flex items-center justify-between mb-4"><button class="p-2 rounded hover:bg-gray-100" onclick="showMainView()">&larr; Back to Home</button><h2 class="text-xl font-bold">Your Rewards</h2><div class="w-8"></div></div>
-            <div class="text-center p-6 bg-white rounded-lg shadow-sm"><h3 class="text-2xl font-bold">Total Stars Collected</h3><p id="total-stars-display" class="text-6xl font-bold star-icon my-4">0</p><p class="text-gray-600">Great job! Keep up the amazing work!</p></div>
-            <div id="star-grid" class="mt-6 grid grid-cols-10 gap-2"></div>
-        </div>
-
+        <header class="flex items-center justify-between mb-6"><button class="p-2" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button><div class="text-center"><h1 class="font-bold text-2xl text-gray-900">Hi Shashi</h1></div><button class="p-2 relative" onclick="showRewardsView()"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg><span id="star-count-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">0</span></button></header>
+        <main id="main-view"><div class="flex justify-between items-center mb-8"><div class="text-left"><p class="text-gray-500">Current Month</p><h2 id="current-month" class="text-xl font-semibold text-gray-900 cursor-pointer" onclick="showCalendarView()"></h2></div><div class="text-right"><p class="text-gray-500">Current Date</p><h2 id="current-date" class="text-xl font-semibold text-gray-900"></h2></div></div><div id="incomplete-activities-container" class="mb-8 hidden"><h3 class="text-lg font-bold text-red-600 mb-2">Incomplete from Yesterday</h3><div id="incomplete-activities-list" class="space-y-4"></div></div><div id="activities-container" class="space-y-4"></div><button onclick="openCustomTaskModal()" class="mt-6 w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>Add Custom Activity</button></main>
+        <div id="calendar-view" class="hidden"><div class="flex items-center justify-between mb-4"><button class="p-2 rounded hover:bg-gray-100" onclick="showMainView()">&larr; Back to Home</button><h2 id="calendar-month-year" class="text-xl font-bold"></h2><div><button id="prev-month" class="p-2 rounded hover:bg-gray-100">&lt;</button><button id="next-month" class="p-2 rounded hover:bg-gray-100">&gt;</button></div></div><div id="calendar-grid" class="grid grid-cols-7 gap-2 text-center"></div><div id="calendar-activity-view" class="mt-6 hidden"><h3 id="calendar-activity-date" class="text-lg font-bold mb-2"></h3><div id="calendar-activity-list" class="space-y-4"></div></div></div>
+        <div id="rewards-view" class="hidden"><div class="flex items-center justify-between mb-4"><button class="p-2 rounded hover:bg-gray-100" onclick="showMainView()">&larr; Back to Home</button><h2 class="text-xl font-bold">Your Rewards</h2><div class="w-8"></div></div><div class="text-center p-6 bg-white rounded-lg shadow-sm"><h3 class="text-2xl font-bold">Total Stars Collected</h3><p id="total-stars-display" class="text-6xl font-bold star-icon my-4">0</p><p class="text-gray-600">Great job! Keep up the amazing work!</p></div><div id="star-grid" class="mt-6 grid grid-cols-10 gap-2"></div></div>
     </div>
-
-    <!-- Modals -->
-    <div id="activity-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0" onclick="closeModal('activity-modal')"></div>
-    <div id="custom-task-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0" onclick="closeModal('custom-task-modal')">
-        <div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-4">Add a Custom Activity</h3>
-            <div class="space-y-4">
-                <input id="custom-task-title" type="text" placeholder="Activity Title (e.g., Library Trip)" class="w-full p-2 border rounded">
-                <textarea id="custom-task-desc" placeholder="Description..." class="w-full p-2 border rounded" rows="3"></textarea>
-                <input id="custom-task-link" type="url" placeholder="Optional: Add a link (e.g., https://...)" class="w-full p-2 border rounded">
-            </div>
-            <div class="mt-6 flex justify-end space-x-3">
-                <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="closeModal('custom-task-modal')">Cancel</button>
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="addCustomTask()">Add Task</button>
-            </div>
-        </div>
-    </div>
+    <div id="activity-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0" onclick="closeModal('activity-modal')"><div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()"><h3 id="modal-title" class="text-xl font-bold mb-2"></h3><p id="modal-description" class="text-gray-700"></p><button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="closeModal('activity-modal')">Close</button></div></div>
+    <div id="custom-task-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0" onclick="closeModal('custom-task-modal')"><div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()"><h3 class="text-xl font-bold mb-4">Add a Custom Activity</h3><div class="space-y-4"><input id="custom-task-title" type="text" placeholder="Activity Title (e.g., Library Trip)" class="w-full p-2 border rounded"><textarea id="custom-task-desc" placeholder="Description..." class="w-full p-2 border rounded" rows="3"></textarea><input id="custom-task-link" type="url" placeholder="Optional: Add a link (e.g., https://...)" class="w-full p-2 border rounded"></div><div class="mt-6 flex justify-end space-x-3"><button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="closeModal('custom-task-modal')">Cancel</button><button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="addCustomTask()">Add Task</button></div></div></div>
     
-    <!-- =================================================================== -->
-    <!-- DATA STORE & FIREBASE SETUP                                         -->
-    <!-- =================================================================== -->
     <script type="module">
-        // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // ===================================================================
-        // NEW: Import monthly data from separate files
-        // ===================================================================
+        import julyPlan from './data/2025/july.js';
+        import augustPlan from './data/2025/august.js';
         import septemberPlan from './data/2025/september.js';
         import octoberPlan from './data/2025/october.js';
         import novemberPlan from './data/2025/november.js';
@@ -96,17 +53,11 @@
         import mayPlan from './data/2026/may.js';
         import junePlan from './data/2026/june.js';
 
-        // --- Main Learning Plan Object ---
-        // This object acts as a directory to the imported monthly data plans.
         const learningPlan = {
-            'September': septemberPlan, 'October': octoberPlan, 'November': novemberPlan,
-            'December': decemberPlan, 'January': januaryPlan, 'February': februaryPlan,
-            'March': marchPlan, 'April': aprilPlan, 'May': mayPlan, 'June': junePlan
+            2025: { 'July': julyPlan, 'August': augustPlan, 'September': septemberPlan, 'October': octoberPlan, 'November': novemberPlan, 'December': decemberPlan },
+            2026: { 'January': januaryPlan, 'February': februaryPlan, 'March': marchPlan, 'April': aprilPlan, 'May': mayPlan, 'June': junePlan }
         };
 
-        // ===================================================================
-        // APPLICATION LOGIC 
-        // ===================================================================
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyC6TuzC3yW-aPIfHuYRLaFaFqzAPTdRD24",
@@ -117,122 +68,84 @@
             appId: "1:311792548720:web:23e280b15cfd8488d52db5",
             measurementId: "G-T0ZL3D01TP"
         };
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
-//        let app, auth, db, userId, activityStatusUnsubscribe;
-        // --- STATE MANAGEMENT ---
-        let currentDisplayDate = new Date(); // Always start on today's date
+        // --- All App Variables ---
+        let app, auth, db, userId;
+        let activityStatusUnsubscribe, customTasksUnsubscribe, rewardsUnsubscribe;
+        let currentDisplayDate = new Date();
         let activityStatus = {};
         let customTasks = {};
         let starCount = 0;
 
         // --- DOM Elements ---
-        const starCountBadge = document.getElementById('star-count-badge');
-        const rewardsView = document.getElementById('rewards-view');
-        const totalStarsDisplay = document.getElementById('total-stars-display');
-        const starGrid = document.getElementById('star-grid');
         const loadingOverlay = document.getElementById('loading-overlay');
         const mainView = document.getElementById('main-view');
+        const rewardsView = document.getElementById('rewards-view');
+        const calendarView = document.getElementById('calendar-view');
         const currentMonthEl = document.getElementById('current-month');
         const currentDateEl = document.getElementById('current-date');
         const activitiesContainer = document.getElementById('activities-container');
-        const calendarView = document.getElementById('calendar-view');
-        const calendarGrid = document.getElementById('calendar-grid');
-        const calendarMonthYearEl = document.getElementById('calendar-month-year');
-        const prevMonthBtn = document.getElementById('prev-month');
-        const nextMonthBtn = document.getElementById('next-month');
-        const monthlyPlanLinksContainer = document.getElementById('monthly-plan-links');
         const incompleteContainer = document.getElementById('incomplete-activities-container');
         const incompleteList = document.getElementById('incomplete-activities-list');
+        const starCountBadge = document.getElementById('star-count-badge');
+        const totalStarsDisplay = document.getElementById('total-stars-display');
+        const starGrid = document.getElementById('star-grid');
+        const calendarMonthYearEl = document.getElementById('calendar-month-year');
+        const calendarGrid = document.getElementById('calendar-grid');
         const calendarActivityView = document.getElementById('calendar-activity-view');
         const calendarActivityDate = document.getElementById('calendar-activity-date');
         const calendarActivityList = document.getElementById('calendar-activity-list');
-        const modal = document.getElementById('activity-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalDescription = document.getElementById('modal-description');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        const monthlyPlanLinksContainer = document.getElementById('monthly-plan-links');
 
-        async function initFirebase() {
-            try {
-                app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        // Detach any existing listener before attaching a new one
-                        if (activityStatusUnsubscribe) activityStatusUnsubscribe();
-                        
-                        const collectionPath = `artifacts/${appId}/users/${userId}/activities`;
-                        activityStatusUnsubscribe = onSnapshot(collection(db, collectionPath), (snapshot) => {
-                            activityStatus = {};
-                            snapshot.forEach(doc => {
-                                activityStatus[doc.id] = doc.data().completed;
-                            });
-                            loadingOverlay.style.display = 'none';
-                            renderMainView();
-                        });
-                    } else {
-                        // Handle user sign-out if necessary
-                        loadingOverlay.style.display = 'flex'; // Show loader if user logs out
-                    }
-                });
-
-                // ADD listeners for custom tasks and stars
-                onSnapshot(collection(db, `artifacts/${appId}/users/${userId}/custom_activities`), (snapshot) => {
-                    customTasks = {};
-                    snapshot.forEach(doc => { customTasks[doc.id] = doc.data(); });
-                    renderMainView();
-                });
-                onSnapshot(doc(db, `artifacts/${appId}/users/${userId}/rewards/stars`), (doc) => {
-                    starCount = doc.exists() ? doc.data().count : 0;
-                    updateStarDisplay();
-                });
-
-                const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                console.error("Firebase Initialization Error:", error);
-                loadingOverlay.innerHTML = `<p class="text-red-500">Error connecting to planner. Please refresh.</p>`;
-            }
+        // --- Core Functions ---
+        function formatDateKey(date) { return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`; }
+        
+        function getActivitiesForDate(date) {
+            const year = date.getFullYear();
+            const monthName = date.toLocaleString('default', { month: 'long' });
+            const dayName = date.toLocaleString('default', { weekday: 'long' });
+            if (dayName === 'Saturday' || dayName === 'Sunday' || !learningPlan[year] || !learningPlan[year][monthName]) return [];
+            const monthPlan = learningPlan[year][monthName];
+            const dayOfMonth = date.getDate();
+            const weekNumber = Math.ceil(dayOfMonth / 7);
+            const dayEntry = monthPlan.find(entry => entry.week === weekNumber && entry.day === dayName);
+            return dayEntry ? dayEntry.activities : [];
+        }
+        
+        function getCategoryColor(category) {
+            const colors = {
+                'Math': '#3b82f6', 'Math Game': '#3b82f6', 'French': '#ef4444', 'Language Fun': '#f97316', 'Mandarin': '#10b981',
+                'Creative': '#8b5cf6', 'Free Play': '#8b5cf6', 'Literacy': '#f59e0b', 'Social': '#ec4899', 'Fine Motor': '#6366f1',
+                'Gross Motor': '#14b8a6', 'Science': '#06b6d4', 'Self-Help': '#22c55e', 'Custom': '#64748b'
+            };
+            return colors[category] || '#6b7280';
         }
 
-        async function toggleActivity(activityId, isCustom = false) {
-            const currentStatus = activityStatus[activityId] || false;
-            const newStatus = !currentStatus;
-            
-            // Update UI optimistically
-            activityStatus[activityId] = newStatus;
-            if (newStatus && !currentStatus) starCount++; else if (!newStatus && currentStatus) starCount--;
-            updateStarDisplay();
-            renderMainView();
-
-            // Update Firestore
-            const activityRef = doc(db, `artifacts/${appId}/users/${userId}/${isCustom ? 'custom_activities' : 'activities' }`, activityId);
-            const starsRef = doc(db, `artifacts/${appId}/users/${userId}/rewards/stars`);
-            
-            try {
-                if (newStatus) {
-                    await setDoc(activityRef, { completed: true });
-                } else {
-                    await deleteDoc(activityRef);
-                }
-                await setDoc(starsRef, { count: starCount });
-            } catch (error) {
-                console.error("Error updating activity:", error);
-                // Revert on error if needed
-            }
-        }
-
+        // --- Rendering Functions ---
         function renderMainView() {
-            // ... (this function now calls renderCustomTasks too)
+            if (!userId) return;
+            currentMonthEl.textContent = currentDisplayDate.toLocaleString('default', { month: 'long' });
+            currentDateEl.textContent = currentDisplayDate.toLocaleDateString('en-US', { day: 'numeric' });
+            activitiesContainer.innerHTML = '';
             renderActivities(currentDisplayDate, activitiesContainer);
             renderCustomTasks(currentDisplayDate, activitiesContainer);
             renderIncompleteActivities();
+        }
+
+        function renderActivities(date, container) {
+            const activities = getActivitiesForDate(date);
+            const dateKey = formatDateKey(date);
+            if (activities.length === 0 && Object.values(customTasks).filter(t => t.date === dateKey).length === 0) {
+                container.innerHTML = `<p class="text-gray-500">No planned activities for today. Enjoy the day off!</p>`;
+            }
+            activities.forEach((activity, index) => {
+                const activityId = `${dateKey}-${index}`;
+                const isCompleted = activityStatus[activityId] || false;
+                const card = createActivityCard(activity, activityId, isCompleted);
+                container.appendChild(card);
+            });
         }
 
         function renderCustomTasks(date, container) {
@@ -247,207 +160,44 @@
             });
         }
 
-        function createActivityCard(activity, activityId, isCompleted, isPending = false, isCustom = false) {
-            const card = document.createElement('div');
-            // ... (card creation logic is similar)
-            // ADD logic to show link and delete icons
-            card.innerHTML = `
-                <div class="flex justify-between items-start">
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center">
-                            ${isCompleted ? '<span class="star-icon mr-2">⭐</span>' : ''}
-                            <h3 class="font-bold text-lg activity-title">${activity.title || activity.cat}</h3>
-                        </div>
-                        <p class="text-gray-600 truncate activity-desc">${activity.desc}</p>
-                    </div>
-                    <div class="flex items-center ml-4 flex-shrink-0">
-                        ${activity.link ? `<a href="${activity.link}" target="_blank" onclick="event.stopPropagation()" class="p-2 text-gray-400 hover:text-blue-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" /></svg></a>` : ''}
-                        ${isCustom ? `<button onclick="deleteCustomTask(event, '${activityId}')" class="p-2 text-gray-400 hover:text-red-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg></button>` : ''}
-                        <input type="checkbox" class="form-checkbox h-6 w-6 rounded text-blue-500 ml-2" onclick="handleCheckboxClick(event, '${activityId}', ${isCustom})" ${isCompleted ? 'checked' : ''}>
-                    </div>
-                </div>
-            `;
-            card.onclick = () => openModal(activity.title || activity.cat, activity.desc);
-            return card;
-        }
-
-        // --- NEW FUNCTIONS ---
-        
-        window.openCustomTaskModal = () => {
-            // Clear previous inputs
-            document.getElementById('custom-task-title').value = '';
-            document.getElementById('custom-task-desc').value = '';
-            document.getElementById('custom-task-link').value = '';
-            openModal('custom-task-modal');
-        }
-
-        window.addCustomTask = async () => {
-            const title = document.getElementById('custom-task-title').value.trim();
-            const desc = document.getElementById('custom-task-desc').value.trim();
-            const link = document.getElementById('custom-task-link').value.trim();
-            if (!title) { alert("Please enter a title for the activity."); return; }
-
-            const newTaskId = `custom_${Date.now()}`;
-            const taskData = {
-                title,
-                desc,
-                link,
-                date: formatDateKey(currentDisplayDate),
-                createdAt: new Date()
-            };
-
-            try {
-                await setDoc(doc(db, `artifacts/${appId}/users/${userId}/custom_activities`, newTaskId), taskData);
-                closeModal('custom-task-modal');
-            } catch (error) {
-                console.error("Error adding custom task:", error);
-                alert("Could not add task. Please try again.");
-            }
-        }
-
-        window.deleteCustomTask = async (event, taskId) => {
-            event.stopPropagation();
-            if (!confirm("Are you sure you want to delete this custom task?")) return;
-            
-            try {
-                // Also remove its completion status if it exists
-                if (activityStatus[taskId]) {
-                    await toggleActivity(taskId, true); // This will also handle star count
-                }
-                await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/custom_activities`, taskId));
-            } catch (error) {
-                console.error("Error deleting task:", error);
-            }
-        }
-        
-        window.showRewardsView = () => {
-            mainView.style.display = 'none';
-            calendarView.style.display = 'none';
-            rewardsView.style.display = 'block';
-            renderStarGrid();
-        }
-
-        function updateStarDisplay() {
-            starCountBadge.textContent = starCount;
-            totalStarsDisplay.textContent = starCount;
-        }
-
-        function renderStarGrid() {
-            starGrid.innerHTML = '';
-            for (let i = 0; i < starCount; i++) {
-                const starEl = document.createElement('span');
-                starEl.className = 'star-icon text-3xl';
-                starEl.textContent = '⭐';
-                starGrid.appendChild(starEl);
-            }
-        }
-
-        // --- All other UI functions (createActivityCard, renderMainView, etc.) go here ---
-        // They remain largely the same, but now use the Firestore-backed `activityStatus`
-        window.formatDateKey = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-        window.getActivitiesForDate = (date) => {
-            const monthName = date.toLocaleString('default', { month: 'long' });
-            const dayName = date.toLocaleString('default', { weekday: 'long' });
-            if (dayName === 'Saturday' || dayName === 'Sunday') return [];
-            const monthPlan = learningPlan[monthName];
-            if (!monthPlan) return [];
-            const dayOfMonth = date.getDate();
-            const weekNumber = Math.ceil(dayOfMonth / 7);
-            const dayEntry = monthPlan.find(entry => entry.week === weekNumber && entry.day === dayName);
-            return dayEntry ? dayEntry.activities : [];
-        };
-        window.getCategoryColor = (category) => {
-            const colors = {
-                'Math': '#3b82f6', 'Math Game': '#3b82f6', 'French': '#ef4444', 'Language Fun': '#f97316', 'Mandarin': '#10b981',
-                'Creative': '#8b5cf6', 'Free Play': '#8b5cf6', 'Literacy': '#f59e0b', 'Social': '#ec4899', 'Fine Motor': '#6366f1',
-                'Gross Motor': '#14b8a6', 'Science': '#06b6d4',
-            };
-            return colors[category] || '#6b7280';
-        };
-        window.openModal = (title, description) => {
-            modalTitle.textContent = title;
-            modalDescription.textContent = description;
-            modal.classList.remove('hidden', 'opacity-0');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => { modal.firstElementChild.classList.remove('scale-95'); }, 10);
-        };
-        window.closeModal = () => {
-            modal.firstElementChild.classList.add('scale-95');
-            modal.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
-        };
-        window.handleCheckboxClick = (event, activityId) => {
-            event.stopPropagation();
-            toggleActivity(activityId);
-        };
-        window.createActivityCard = (activity, activityId, isCompleted, isPending = false) => {
-            const card = document.createElement('div');
-            card.className = `activity-card bg-white p-4 rounded-lg shadow-sm border-l-4 ${isCompleted ? 'completed' : ''} ${isPending ? 'bg-red-50' : ''}`;
-            card.style.borderLeftColor = isPending && !isCompleted ? '#ef4444' : getCategoryColor(activity.cat);
-            card.innerHTML = `<div class="flex justify-between items-start"><div><h3 class="font-bold text-lg">${activity.cat}</h3><p class="text-gray-600 truncate">${activity.desc}</p></div><input type="checkbox" class="form-checkbox h-6 w-6 rounded text-blue-500 ml-4 flex-shrink-0" onclick="handleCheckboxClick(event, '${activityId}')" ${isCompleted ? 'checked' : ''}></div>`;
-            card.onclick = () => openModal(activity.cat, activity.desc);
-            return card;
-        };
-        window.renderActivities = (date, container) => {
-            container.innerHTML = '';
-            const activities = getActivitiesForDate(date);
-            const dateKey = formatDateKey(date);
-            if (activities.length === 0) {
-                container.innerHTML = `<p class="text-gray-500">No planned activities for today. Enjoy the day off!</p>`;
-                return;
-            }
-            activities.forEach((activity, index) => {
-                const activityId = `${dateKey}-${index}`;
-                const isCompleted = activityStatus[activityId] || false;
-                const card = createActivityCard(activity, activityId, isCompleted);
-                container.appendChild(card);
-            });
-        };
-        window.renderIncompleteActivities = () => {
+        function renderIncompleteActivities() {
             incompleteList.innerHTML = '';
             let yesterday = new Date(currentDisplayDate);
             yesterday.setDate(yesterday.getDate() - 1);
-            if (yesterday.getDay() === 0) { yesterday.setDate(yesterday.getDate() - 2); } else if (yesterday.getDay() === 6) { yesterday.setDate(yesterday.getDate() - 1); }
-            const yesterdayKey = formatDateKey(yesterday);
-            const activities = getActivitiesForDate(yesterday);
+            if (yesterday.getDay() === 0) { yesterday.setDate(yesterday.getDate() - 2); } 
+            else if (yesterday.getDay() === 6) { yesterday.setDate(yesterday.getDate() - 1); }
+            
             let hasIncomplete = false;
-            activities.forEach((activity, index) => {
-                const activityId = `${yesterdayKey}-${index}`;
-                if (!activityStatus[activityId]) {
-                    hasIncomplete = true;
-                    const card = createActivityCard(activity, activityId, false, true);
-                    incompleteList.appendChild(card);
-                }
-            });
+            const checkAndRender = (date) => {
+                const dateKey = formatDateKey(date);
+                const activities = getActivitiesForDate(date);
+                activities.forEach((activity, index) => {
+                    const activityId = `${dateKey}-${index}`;
+                    if (!activityStatus[activityId]) {
+                        hasIncomplete = true;
+                        const card = createActivityCard(activity, activityId, false, true);
+                        incompleteList.appendChild(card);
+                    }
+                });
+            };
+            checkAndRender(yesterday);
             incompleteContainer.style.display = hasIncomplete ? 'block' : 'none';
-        };
-        window.renderMainView = () => {
-            currentMonthEl.textContent = currentDisplayDate.toLocaleString('default', { month: 'long' });
-            currentDateEl.textContent = currentDisplayDate.toLocaleDateString('en-US', { day: 'numeric' });
-            renderActivities(currentDisplayDate, activitiesContainer);
-            renderIncompleteActivities();
-        };
-        window.showMainView = () => {
-            mainView.style.display = 'block';
-            calendarView.style.display = 'none';
-            renderMainView();
-        };
-        window.showCalendarView = () => {
-            mainView.style.display = 'none';
-            calendarView.style.display = 'block';
-            renderCalendar(currentDisplayDate.getFullYear(), currentDisplayDate.getMonth());
-            calendarActivityView.style.display = 'none';
-        };
-        window.renderCalendar = (year, month) => {
+        }
+
+        function createActivityCard(activity, activityId, isCompleted, isPending = false, isCustom = false) {
+            const card = document.createElement('div');
+            card.className = `activity-card bg-white p-4 rounded-lg shadow-sm border-l-4 ${isCompleted ? 'completed' : ''} ${isPending ? 'bg-red-50' : ''}`;
+            card.style.borderLeftColor = isPending && !isCompleted ? '#ef4444' : getCategoryColor(activity.cat || 'Custom');
+            card.innerHTML = `<div class="flex justify-between items-start"><div class="flex-1 min-w-0"><div class="flex items-center">${isCompleted ? '<span class="star-icon mr-2">⭐</span>' : ''}<h3 class="font-bold text-lg activity-title">${activity.title || activity.cat}</h3></div><p class="text-gray-600 truncate activity-desc">${activity.desc}</p></div><div class="flex items-center ml-4 flex-shrink-0">${activity.link ? `<a href="${activity.link}" target="_blank" onclick="event.stopPropagation()" class="p-2 text-gray-400 hover:text-blue-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" /></svg></a>` : ''}${isCustom ? `<button onclick="deleteCustomTask(event, '${activityId}')" class="p-2 text-gray-400 hover:text-red-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg></button>` : ''}<input type="checkbox" class="form-checkbox h-6 w-6 rounded text-blue-500 ml-2" onclick="handleCheckboxClick(event, '${activityId}', ${isCustom})" ${isCompleted ? 'checked' : ''}></div></div>`;
+            card.onclick = () => openModal('activity-modal', activity.title || activity.cat, activity.desc);
+            return card;
+        }
+
+        function renderCalendar(year, month) {
             calendarGrid.innerHTML = '';
             calendarMonthYearEl.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
             const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            daysOfWeek.forEach(day => {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'font-bold text-gray-600';
-                dayEl.textContent = day;
-                calendarGrid.appendChild(dayEl);
-            });
+            daysOfWeek.forEach(day => { calendarGrid.appendChild(Object.assign(document.createElement('div'), { className: 'font-bold text-gray-600', textContent: day })); });
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             for (let i = 0; i < firstDay; i++) { calendarGrid.appendChild(document.createElement('div')); }
@@ -466,14 +216,12 @@
                 };
                 calendarGrid.appendChild(dayEl);
             }
-        };
-        window.renderCalendarActivities = (date, container) => {
+        }
+
+        function renderCalendarActivities(date, container) {
             container.innerHTML = '';
             const activities = getActivitiesForDate(date);
-            if (activities.length === 0) {
-                container.innerHTML = `<p class="text-gray-500">No planned activities.</p>`;
-                return;
-            }
+            if (activities.length === 0) { container.innerHTML = `<p class="text-gray-500">No planned activities.</p>`; return; }
             activities.forEach(activity => {
                 const card = document.createElement('div');
                 card.className = 'bg-white p-4 rounded-lg shadow-sm border-l-4';
@@ -481,31 +229,88 @@
                 card.innerHTML = `<h3 class="font-bold text-lg">${activity.cat}</h3><p class="text-gray-600">${activity.desc}</p>`;
                 container.appendChild(card);
             });
-        };
-        window.renderSidebar = () => {
+        }
+
+        function renderSidebar() {
             monthlyPlanLinksContainer.innerHTML = '';
-            Object.keys(learningPlan).forEach((month, index) => {
+            const months = Object.keys(learningPlan[2025]).concat(Object.keys(learningPlan[2026]));
+            months.forEach((month) => {
                 const a = document.createElement('a');
                 a.href = '#';
                 a.className = 'block p-2 rounded hover:bg-gray-100';
                 a.textContent = month;
                 a.onclick = (e) => {
                     e.preventDefault();
-                    const year = index < 4 ? 2025 : 2026;
-                    const monthIndex = (index + 8) % 12;
+                    const monthIndex = new Date(Date.parse(month +" 1, 2025")).getMonth();
+                    const year = monthIndex >= 6 ? 2025 : 2026; // July onwards is 2025 for this school year
                     currentDisplayDate = new Date(year, monthIndex, 1);
                     showCalendarView();
                     toggleSidebar();
                 };
                 monthlyPlanLinksContainer.appendChild(a);
             });
-        };
-        window.toggleSidebar = () => {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        };
+        }
+
+        function updateStarDisplay() {
+            starCountBadge.textContent = starCount;
+            totalStarsDisplay.textContent = starCount;
+        }
+
+        function renderStarGrid() {
+            starGrid.innerHTML = '';
+            for (let i = 0; i < starCount; i++) {
+                starGrid.appendChild(Object.assign(document.createElement('span'), { className: 'star-icon text-3xl', textContent: '⭐' }));
+            }
+        }
+
+        // --- Firebase Functions ---
+        async function toggleActivity(activityId, isCustom = false) {
+            const currentStatus = activityStatus[activityId] || false;
+            const newStatus = !currentStatus;
+            const starsRef = doc(db, `artifacts/kg-planner-app/users/${userId}/rewards/stars`);
+            const activityRef = doc(db, `artifacts/kg-planner-app/users/${userId}/activities`, activityId);
+            
+            activityStatus[activityId] = newStatus;
+            if (newStatus) { starCount++; } else { starCount = Math.max(0, starCount - 1); }
+            
+            renderMainView();
+            updateStarDisplay();
+
+            try {
+                if (newStatus) { await setDoc(activityRef, { completed: true }); } 
+                else { await deleteDoc(activityRef); }
+                await setDoc(starsRef, { count: starCount });
+            } catch (error) { console.error("Error updating activity:", error); }
+        }
+
+        async function initFirebase() {
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                const appId = 'kg-planner-app';
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        if (activityStatusUnsubscribe) activityStatusUnsubscribe();
+                        if (customTasksUnsubscribe) customTasksUnsubscribe();
+                        if (rewardsUnsubscribe) rewardsUnsubscribe();
+                        
+                        activityStatusUnsubscribe = onSnapshot(collection(db, `artifacts/${appId}/users/${userId}/activities`), (snap) => { activityStatus = {}; snap.forEach(doc => activityStatus[doc.id] = doc.data().completed); renderMainView(); });
+                        customTasksUnsubscribe = onSnapshot(collection(db, `artifacts/${appId}/users/${userId}/custom_activities`), (snap) => { customTasks = {}; snap.forEach(doc => customTasks[doc.id] = doc.data()); renderMainView(); });
+                        rewardsUnsubscribe = onSnapshot(doc(db, `artifacts/${appId}/users/${userId}/rewards/stars`), (doc) => { starCount = doc.exists() ? doc.data().count : 0; updateStarDisplay(); });
+                        
+                        loadingOverlay.style.display = 'none';
+                    }
+                });
+
+                await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                loadingOverlay.innerHTML = `<p class="text-red-500">Error connecting. Please refresh.</p>`;
+            }
+        }
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
