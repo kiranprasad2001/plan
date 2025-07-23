@@ -116,106 +116,32 @@
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- DATA STORE (Organized by month) ---
-        const septemberPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Social', desc: 'Talk about the first day of school. Ask, "What made you smile?"' }, { cat: 'French', desc: 'Practice `Bonjour` (hello) & `Au revoir` (goodbye).' }, { cat: 'Creative', desc: 'Draw your classroom or a new friend.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Math', desc: 'Count to 3. Find 3 of the same object.' }, { cat: 'Mandarin', desc: 'Learn to count to 3: 一 (yī), 二 (èr), 三 (sān).' }, { cat: 'Fine Motor', desc: 'Practice holding a crayon correctly.' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Literacy', desc: 'Find the first letter of your name in a book.' }, { cat: 'French', desc: 'Introduce yourself: "Je m\'appelle..."' }, { cat: 'Gross Motor', desc: 'Play "Follow the Leader".' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Math', desc: 'Go on a shape hunt for circles.' }, { cat: 'Mandarin', desc: 'Introduce yourself: 我叫... (wǒ jiào...).' }, { cat: 'Science', desc: 'Talk about the 5 senses at snack time.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing "Twinkle, Twinkle, Little Star".' }, { cat: 'French/Mandarin', desc: 'Review greetings.' }, { cat: 'Free Play', desc: 'Use play-doh to make letters.' }] },
-            { week: 2, day: 'Monday', activities: [{ cat: 'Math', desc: 'Count your family members.' }, { cat: 'French', desc: 'Learn `rouge` (red) & `bleu` (blue). Scavenger hunt for colors.' }, { cat: 'Creative', desc: 'Draw a family portrait.' }] },
-            { week: 2, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Trace your name with your finger.' }, { cat: 'Mandarin', desc: 'Learn 红色 (hóng sè - red) & 蓝色 (lán sè - blue).' }, { cat: 'Gross Motor', desc: 'Play "Simon Says" with body parts.' }] },
-            { week: 2, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Go on a shape hunt for squares.' }, { cat: 'French', desc: 'Learn `la famille` (family). Say "C\'est ma famille".' }, { cat: 'Science', desc: 'Talk about how families help each other.' }] },
-            { week: 2, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Read a book about families.' }, { cat: 'Mandarin', desc: 'Learn 妈妈 (māmā - mom) & 爸爸 (bàba - dad).' }, { cat: 'Fine Motor', desc: 'Practice cutting strips of paper.' }] },
-            { week: 2, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Make up silly sentences about family.' }, { cat: 'Math', desc: 'Practice "more" and "less" (e.g. more adults or kids?).' }, { cat: 'Free Play', desc: 'Build your house with blocks.' }] },
-            { week: 3, day: 'Monday', activities: [{ cat: 'Math', desc: 'Go on a shape hunt for triangles.' }, { cat: 'French', desc: 'Learn body parts: `la tête` (head), `les mains` (hands).' }, { cat: 'Creative', desc: 'Make handprint art.' }] },
-            { week: 3, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Focus on the sound of the first letter of your name.' }, { cat: 'Mandarin', desc: 'Learn body parts: 头 (tóu - head), 手 (shǒu - hand).' }, { cat: 'Gross Motor', desc: 'Dance to music and freeze when it stops.' }] },
-            { week: 3, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Practice writing numerals 1-5.' }, { cat: 'French', desc: 'Learn the color `jaune` (yellow). Find yellow things.' }, { cat: 'Science', desc: 'Talk about why we need to wash our hands.' }] },
-            { week: 3, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Read a rhyming book.' }, { cat: 'Mandarin', desc: 'Learn 黄色 (huáng sè - yellow).' }, { cat: 'Fine Motor', desc: 'Use tongs to move cotton balls from one bowl to another.' }] },
-            { week: 3, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing "Head, Shoulders, Knees & Toes".' }, { cat: 'Math', desc: 'Count your fingers and toes.' }, { cat: 'Free Play', desc: 'Make people out of play-doh.' }] },
-            { week: 4, day: 'Monday', activities: [{ cat: 'Math', desc: 'Go on a shape hunt for rectangles.' }, { cat: 'French', desc: 'Learn feeling words: `content(e)` (happy), `triste` (sad).' }, { cat: 'Creative', desc: 'Draw faces showing different emotions.' }] },
-            { week: 4, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Read a book about feelings.' }, { cat: 'Mandarin', desc: 'Learn feeling words: 高兴 (gāoxìng - happy), 傷心 (shāngxīn - sad).' }, { cat: 'Gross Motor', desc: 'Act out feelings (stomp when angry, jump when happy).' }] },
-            { week: 4, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Count objects up to 10.' }, { cat: 'French', desc: 'Learn the color `vert` (green).' }, { cat: 'Science', desc: 'Talk about what makes us feel happy or sad.' }] },
-            { week: 4, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Create a "feelings" book with drawings.' }, { cat: 'Mandarin', desc: 'Learn 绿色 (lǜ sè - green).' }, { cat: 'Fine Motor', desc: 'Practice drawing shapes.' }] },
-            { week: 4, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Review all French & Mandarin words from September.' }, { cat: 'Math', desc: 'Review numbers 1-5.' }, { cat: 'Free Play', desc: 'Use blocks to build something that makes you happy.' }] },
-        ];
-        const octoberPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'French', desc: 'Collect leaves. Practice color words (`rouge`, `jaune`). Say "Je vois une feuille rouge."' }, { cat: 'Math', desc: 'Sort leaves by color and size. Count them.' }, { cat: 'Creative', desc: 'Do leaf rubbings with crayons.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Mandarin', desc: 'Learn farm animals: 猫 (māo - cat), 狗 (gǒu - dog). Make animal sounds.' }, { cat: 'Math', desc: 'Create patterns with acorns & twigs (A-B-A-B).' }, { cat: 'Gross Motor', desc: 'Pretend to be different farm animals.' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'French', desc: 'Read a book about pumpkins. Learn `la citrouille`. Count pumpkins in French.' }, { cat: 'Math', desc: 'Count a real pumpkin\'s ridges. Is it heavy or light?' }, { cat: 'Science', desc: 'Explore the inside of a pumpkin.' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Mandarin', desc: 'Review numbers 1-10 (一 to 十). Count fingers & toes.' }, { cat: 'Math', desc: 'Practice writing numerals 6-10 in a salt tray.' }, { cat: 'Fine Motor', desc: 'Use tongs to transfer pumpkin seeds.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing `Frère Jacques` (French) & 两只老虎 (Mandarin).' }, { cat: 'Math Game', desc: 'Play a simple board game.' }, { cat: 'Free Play', desc: 'Make autumn shapes with play-doh.' }] },
-            { week: 2, day: 'Monday', activities: [{ cat: 'Math', desc: 'Practice counting to 10 with small toys.' }, { cat: 'French', desc: 'Learn `la vache` (cow) & `le mouton` (sheep).' }, { cat: 'Creative', desc: 'Make animal puppets on paper bags.' }] },
-            { week: 2, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Read "The Three Little Pigs." Talk about sequence (first, next, last).' }, { cat: 'Mandarin', desc: 'Learn 牛 (niú - cow) & 羊 (yáng - sheep).' }, { cat: 'Gross Motor', desc: 'Do an "animal walk" (hop, waddle, gallop).' }] },
-            { week: 2, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Sort toy animals into groups (farm vs. wild).' }, { cat: 'French', desc: 'Say "Je vois..." to name animals in a book.' }, { cat: 'Science', desc: 'Talk about what we get from farm animals.' }] },
-            { week: 2, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Listen for rhyming words in a story.' }, { cat: 'Mandarin', desc: 'Count your animal toys from 1-10.' }, { cat: 'Fine Motor', desc: 'Make simple animal shapes with play-doh.' }] },
-            { week: 2, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing "Old MacDonald" with French/Mandarin animal names.' }, { cat: 'Math', desc: 'Play an animal matching game.' }, { cat: 'Free Play', desc: 'Put on a puppet show.' }] },
-        ];
-        const novemberPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Compare the height of two toys. Which is `taller`? `shorter`?' }, { cat: 'French', desc: 'Learn `le docteur` & `le pompier`.' }, { cat: 'Creative', desc: 'Draw a community helper at work.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Talk about community signs (STOP, traffic lights).' }, { cat: 'Mandarin', desc: 'Learn 医生 (yīshēng) & 消防员 (xiāofáng yuán).' }, { cat: 'Gross Motor', desc: 'Play "Red Light, Green Light".' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Count backwards from 10.' }, { cat: 'French', desc: 'Learn body parts: `la tête`, `les mains`.' }, { cat: 'Science', desc: 'Talk about cause & effect (e.g. rain makes ground wet).' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Read a book about a helper. What problem did they solve?' }, { cat: 'Mandarin', desc: 'Learn body parts: 头 (tóu), 手 (shǒu).' }, { cat: 'Fine Motor', desc: 'Practice zipping a jacket.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing "The Wheels on the Bus".' }, { cat: 'Math', desc: 'Build a fire station with blocks.' }, { cat: 'Free Play', desc: 'Pretend to be different community helpers.' }] },
-        ];
-        const decemberPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Clap syllables in winter words (win-ter, snow-flake).' }, { cat: 'French', desc: 'Learn `l\'hiver` (winter) & `la neige` (snow).' }, { cat: 'Creative', desc: 'Make paper snowflakes.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Read a book about winter. What do characters wear?' }, { cat: 'Mandarin', desc: 'Learn 冬天 (dōngtiān) & 雪 (xuě).' }, { cat: 'Gross Motor', desc: 'Pretend to be a twirling snowflake.' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Make a simple graph with red & green pom-poms.' }, { cat: 'French', desc: 'Learn `Il fait froid` (It is cold).' }, { cat: 'Science', desc: 'Talk about why it gets colder in winter.' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Practice writing your name on a card.' }, { cat: 'Mandarin', desc: 'Learn 冷 (lěng - cold).' }, { cat: 'Fine Motor', desc: 'String O-shaped cereal to make decorations.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing winter songs like "Jingle Bells".' }, { cat: 'Math', desc: 'Scavenger hunt for pairs (mittens, socks).' }, { cat: 'Free Play', desc: 'Build an indoor snow fort with pillows.' }] },
-        ];
-        const januaryPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Simple addition with objects ($2+1=3$).' }, { cat: 'French', desc: 'Learn `l\'ours polaire` (polar bear).' }, { cat: 'Creative', desc: 'Make polar bear art with cotton balls.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Use "robot talk" to sound out words (/c/-/a/-/t/).' }, { cat: 'Mandarin', desc: 'Learn 北极熊 (běijíxióng - polar bear).' }, { cat: 'Gross Motor', desc: 'Crawl like a polar bear.' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Practice writing numbers 1-15.' }, { cat: 'French', desc: 'Learn the color `blanc` (white).' }, { cat: 'Science', desc: 'Talk about camouflage (why are polar bears white?).' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Emphasize the first sound in family members\' names.' }, { cat: 'Mandarin', desc: 'Learn 白色 (báisè - white).' }, { cat: 'Fine Motor', desc: 'Make animal tracks in play-doh.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing a song about a bear.' }, { cat: 'Math', desc: 'Estimate how many cotton balls are in a jar, then count.' }, { cat: 'Free Play', desc: 'Build an igloo with blocks.' }] },
-        ];
-        const februaryPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Use positional words (in front of, behind, beside).' }, { cat: 'French', desc: 'Learn `ami(e)` (friend).' }, { cat: 'Creative', desc: 'Make a friendship bracelet.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Read a book about friendship.' }, { cat: 'Mandarin', desc: 'Learn 朋友 (péngyǒu - friend).' }, { cat: 'Gross Motor', desc: 'Play a cooperative game like tossing a balloon.' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Practice counting down from 10.' }, { cat: 'French', desc: 'Learn "Let\'s share": `On partage`.' }, { cat: 'Science', desc: 'Talk about what makes a good friend.' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'What\'s the last sound in your name?' }, { cat: 'Mandarin', desc: 'Learn "Let\'s play together": 我们一起玩 (wǒmen yīqǐ wán).' }, { cat: 'Fine Motor', desc: 'Draw a picture for a friend.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Call a friend or relative.' }, { cat: 'Math', desc: 'Play a board game and practice taking turns.' }, { cat: 'Free Play', desc: 'Have a tea party with toys and friends.' }] },
-        ];
-        const marchPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Measure things with non-standard units (e.g., a book is 5 crayons long).' }, { cat: 'French', desc: 'Learn `le printemps` (spring) & `la fleur` (flower).' }, { cat: 'Creative', desc: 'Paint with spring colors.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Read a book about spring.' }, { cat: 'Mandarin', desc: 'Learn 春天 (chūntiān - spring) & 花 (huā - flower).' }, { cat: 'Gross Motor', desc: 'Go for a walk and look for signs of spring.' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Introduce Canadian coins (penny, nickel, dime).' }, { cat: 'French', desc: 'Learn weather words: `le soleil` (sun), `la pluie` (rain).' }, { cat: 'Science', desc: 'Plant a bean seed in a clear cup and watch it grow.' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Rhyme time! What rhymes with `spring`?' }, { cat: 'Mandarin', desc: 'Learn weather words: 太阳 (tàiyáng - sun), 雨 (yǔ - rain).' }, { cat: 'Fine Motor', desc: 'Use droppers with colored water on paper towels.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing "Rain, Rain, Go Away".' }, { cat: 'Math', desc: 'Roll a die. What is one more? Two more?' }, { cat: 'Free Play', desc: 'Make a garden with play-doh.' }] },
-        ];
-        const aprilPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Go on a 3D shape hunt (`sphere`, `cube`, `cone`).' }, { cat: 'French', desc: 'Learn `la Terre` (the Earth).' }, { cat: 'Creative', desc: 'Make an Earth collage with blue and green paper.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Read "The Lorax" or another book about caring for the planet.' }, { cat: 'Mandarin', desc: 'Learn 地球 (dìqiú - the Earth).' }, { cat: 'Gross Motor', desc: 'Go on a neighborhood cleanup walk (with gloves).' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Sort recycling into paper, plastic, and cans.' }, { cat: 'French', desc: 'Learn `recycler` (to recycle).' }, { cat: 'Science', desc: 'Talk about why recycling is important.' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Jump for sounds in a word (e.g., b-a-t = 3 jumps).' }, { cat: 'Mandarin', desc: 'Learn 回收 (huíshōu - to recycle).' }, { cat: 'Fine Motor', desc: 'Make art from recyclable materials.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing a song about the Earth.' }, { cat: 'Math', desc: 'Compare numbers: more windows or doors in your home?' }, { cat: 'Free Play', desc: 'Build a recycling truck with blocks.' }] },
-        ];
-        const mayPlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Learn to tell time to the hour on an analog clock.' }, { cat: 'French', desc: 'Learn `la voiture` (car) & `le train` (train).' }, { cat: 'Creative', desc: 'Make a traffic light from construction paper.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'Read a book about cars or trains.' }, { cat: 'Mandarin', desc: 'Learn 汽车 (qìchē - car) & 火车 (huǒchē - train).' }, { cat: 'Gross Motor', desc: 'Race toy cars down a ramp.' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'How many ways can you make 10 with two colors of Lego?' }, { cat: 'French', desc: 'Learn `vite` (fast) & `lentement` (slow).' }, { cat: 'Science', desc: 'Talk about wheels and how they help things move.' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Play "I Spy" with sounds ("I spy something starting with /b/").' }, { cat: 'Mandarin', desc: 'Learn 快 (kuài - fast) & 慢 (màn - slow).' }, { cat: 'Fine Motor', desc: 'Draw a map of your neighborhood.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Sing "The Wheels on the Bus".' }, { cat: 'Math', desc: 'Use a tally chart to count cars you see on a walk.' }, { cat: 'Free Play', desc: 'Build a city with roads for toy cars.' }] },
-        ];
-        const junePlan = [
-            { week: 1, day: 'Monday', activities: [{ cat: 'Math', desc: 'Review numbers 1-20.' }, { cat: 'French', desc: 'Learn `l\'océan` (ocean) & `le poisson` (fish).' }, { cat: 'Creative', desc: 'Make fish prints with paint and a sponge.' }] },
-            { week: 1, day: 'Tuesday', activities: [{ cat: 'Literacy', desc: 'What sound is in the middle of `moon`? `spoon`?' }, { cat: 'Mandarin', desc: 'Learn 海洋 (hǎiyáng - ocean) & 鱼 (yú - fish).' }, { cat: 'Gross Motor', desc: 'Move like an ocean animal (crab walk, dolphin dive).' }] },
-            { week: 1, day: 'Wednesday', activities: [{ cat: 'Math', desc: 'Simple word problems with objects ("You have 3 shells, you find 2 more...").' }, { cat: 'French', desc: 'Learn `la plage` (beach).' }, { cat: 'Science', desc: 'Sink or float? Test objects in a basin of water.' }] },
-            { week: 1, day: 'Thursday', activities: [{ cat: 'Literacy', desc: 'Cut a sentence into words and reassemble it.' }, { cat: 'Mandarin', desc: 'Learn 沙滩 (shātān - beach).' }, { cat: 'Fine Motor', desc: 'Play with sand or water in a sensory bin.' }] },
-            { week: 1, day: 'Friday', activities: [{ cat: 'Language Fun', desc: 'Review all French & Mandarin words from the year.' }, { cat: 'Math', desc: 'Review all math concepts.' }, { cat: 'Free Play', desc: 'Have a pretend beach day.' }] },
-        ];
+        // ===================================================================
+        // NEW: Import monthly data from separate files
+        // ===================================================================
+        import septemberPlan from './data/september.js';
+        import octoberPlan from './data/october.js';
+        import novemberPlan from './data/november.js';
+        import decemberPlan from './data/december.js';
+        import januaryPlan from './data/january.js';
+        import februaryPlan from './data/february.js';
+        import marchPlan from './data/march.js';
+        import aprilPlan from './data/april.js';
+        import mayPlan from './data/may.js';
+        import junePlan from './data/june.js';
 
+        // --- Main Learning Plan Object ---
+        // This object acts as a directory to the imported monthly data plans.
         const learningPlan = {
             'September': septemberPlan, 'October': octoberPlan, 'November': novemberPlan,
             'December': decemberPlan, 'January': januaryPlan, 'February': februaryPlan,
             'March': marchPlan, 'April': aprilPlan, 'May': mayPlan, 'June': junePlan
         };
 
-        // --- Firebase & App Logic ---
-        // These are placeholder variables that will be populated by the environment
+        // ===================================================================
+        // APPLICATION LOGIC (Remains the same)
+        // ===================================================================
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyC6TuzC3yW-aPIfHuYRLaFaFqzAPTdRD24",
             authDomain: "kindergarten-planner-c70b2.firebaseapp.com",
@@ -233,7 +159,6 @@
 
         const loadingOverlay = document.getElementById('loading-overlay');
         const mainView = document.getElementById('main-view');
-        // ... get all other DOM elements ...
         const currentMonthEl = document.getElementById('current-month');
         const currentDateEl = document.getElementById('current-date');
         const activitiesContainer = document.getElementById('activities-container');
@@ -251,7 +176,6 @@
         const modal = document.getElementById('activity-modal');
         const modalTitle = document.getElementById('modal-title');
         const modalDescription = document.getElementById('modal-description');
-
 
         async function initFirebase() {
             try {
