@@ -155,7 +155,8 @@
         
         let app, auth, db, userId, activityStatusUnsubscribe;
         let activityStatus = {};
-        let currentDisplayDate = new Date(2025, 8, 3);
+//        let currentDisplayDate = new Date(2025, 8, 3);
+        let currentDisplayDate = new Date(); // Default to today's date
 
         const loadingOverlay = document.getElementById('loading-overlay');
         const mainView = document.getElementById('main-view');
