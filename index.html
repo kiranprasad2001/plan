@@ -216,7 +216,15 @@
 
         // --- Firebase & App Logic ---
         // These are placeholder variables that will be populated by the environment
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6TuzC3yW-aPIfHuYRLaFaFqzAPTdRD24",
+            authDomain: "kindergarten-planner-c70b2.firebaseapp.com",
+            projectId: "kindergarten-planner-c70b2",
+            storageBucket: "kindergarten-planner-c70b2.firebasestorage.app",
+            messagingSenderId: "311792548720",
+            appId: "1:311792548720:web:23e280b15cfd8488d52db5",
+            measurementId: "G-T0ZL3D01TP"
+        };
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
         let app, auth, db, userId, activityStatusUnsubscribe;
