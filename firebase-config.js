@@ -1,7 +1,7 @@
 // This file holds the unique configuration for your personal Firebase project.
 // Keep this file private and do not share it publicly.
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyC6TuzC3yW-aPIfHuYRLaFaFqzAPTdRD24",
     authDomain: "kindergarten-planner-c70b2.firebaseapp.com",
     projectId: "kindergarten-planner-c70b2",
