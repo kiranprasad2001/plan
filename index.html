@@ -28,11 +28,11 @@
         <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-30 transform -translate-x-full transition-transform duration-300 ease-in-out"><div class="p-4"><h2 class="text-xl font-bold text-gray-900 mb-4">Yearly Plan</h2><div id="monthly-plan-links" class="space-y-2"></div></div></div>
         <div id="sidebar-overlay" class="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20 hidden" onclick="toggleSidebar()"></div>
         <header class="flex items-center justify-between mb-6"><button class="p-2" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button><div class="text-center"><h1 class="font-bold text-2xl text-gray-900">Hi Shashi</h1></div><button class="p-2 relative" onclick="showRewardsView()"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg><span id="star-count-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">0</span></button></header>
-        <main id="main-view"><div class="flex justify-between items-center mb-8"><div class="text-left"><p class="text-gray-500">Current Month</p><h2 id="current-month" class="text-xl font-semibold text-gray-900 cursor-pointer" onclick="showCalendarView()"></h2></div><div class="text-right"><p class="text-gray-500">Current Date</p><h2 id="current-date" class="text-xl font-semibold text-gray-900"></h2></div></div><div id="incomplete-activities-container" class="mb-8 hidden"><h3 class="text-lg font-bold text-red-600 mb-2">Incomplete from Yesterday</h3><div id="incomplete-activities-list" class="space-y-4"></div></div><div id="activities-container" class="space-y-4"></div><button onclick="openCustomTaskModal()" class="mt-6 w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>Add Custom Activity</button></main>
+        <main id="main-view"><div class="flex justify-between items-center mb-8"><div class="text-left"><p class="text-gray-500">Current Month</p><h2 id="current-month" class="text-xl font-semibold text-gray-900 cursor-pointer" onclick="showCalendarView()"></h2></div><div class="text-right"><p class="text-gray-500">Current Date</p><h2 id="current-date" class="text-xl font-semibold text-gray-900"></h2></div></div><div id="incomplete-activities-container" class="mb-8 hidden"><h3 class="text-lg font-bold text-red-600 mb-2">Pending Activities</h3><div id="incomplete-activities-list" class="space-y-4"></div></div><div id="activities-container" class="space-y-4"></div><button onclick="openCustomTaskModal()" class="mt-6 w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>Add Custom Activity</button></main>
         <div id="calendar-view" class="hidden"><div class="flex items-center justify-between mb-4"><button class="p-2 rounded hover:bg-gray-100" onclick="showMainView()">&larr; Back to Home</button><h2 id="calendar-month-year" class="text-xl font-bold"></h2><div><button id="prev-month" class="p-2 rounded hover:bg-gray-100">&lt;</button><button id="next-month" class="p-2 rounded hover:bg-gray-100">&gt;</button></div></div><div id="calendar-grid" class="grid grid-cols-7 gap-2 text-center"></div><div id="calendar-activity-view" class="mt-6 hidden"><h3 id="calendar-activity-date" class="text-lg font-bold mb-2"></h3><div id="calendar-activity-list" class="space-y-4"></div></div></div>
         <div id="rewards-view" class="hidden"><div class="flex items-center justify-between mb-4"><button class="p-2 rounded hover:bg-gray-100" onclick="showMainView()">&larr; Back to Home</button><h2 class="text-xl font-bold">Your Rewards</h2><div class="w-8"></div></div><div class="text-center p-6 bg-white rounded-lg shadow-sm"><h3 class="text-2xl font-bold">Total Stars Collected</h3><p id="total-stars-display" class="text-6xl font-bold star-icon my-4">0</p><p class="text-gray-600">Great job! Keep up the amazing work!</p></div><div id="star-grid" class="mt-6 grid grid-cols-10 gap-2"></div></div>
     </div>
-    <div id="activity-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0" onclick="closeModal('activity-modal')"><div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()"><h3 id="modal-title" class="text-xl font-bold mb-2"></h3><p id="modal-description" class="text-gray-700"></p><button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="closeModal('activity-modal')">Close</button></div></div>
+    <div id="activity-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0" onclick="closeModal('activity-modal')"><div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()"><h3 id="modal-title" class="text-xl font-bold mb-2"></h3><p id="modal-description" class="text-gray-700 whitespace-pre-wrap"></p><button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="closeModal('activity-modal')">Close</button></div></div>
     <div id="custom-task-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 hidden opacity-0" onclick="closeModal('custom-task-modal')"><div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95" onclick="event.stopPropagation()"><h3 class="text-xl font-bold mb-4">Add a Custom Activity</h3><div class="space-y-4"><input id="custom-task-title" type="text" placeholder="Activity Title (e.g., Library Trip)" class="w-full p-2 border rounded"><textarea id="custom-task-desc" placeholder="Description..." class="w-full p-2 border rounded" rows="3"></textarea><input id="custom-task-link" type="url" placeholder="Optional: Add a link (e.g., https://...)" class="w-full p-2 border rounded"></div><div class="mt-6 flex justify-end space-x-3"><button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="closeModal('custom-task-modal')">Cancel</button><button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="addCustomTask()">Add Task</button></div></div></div>
     
     <script type="module">
@@ -161,27 +161,53 @@
         }
 
         function renderIncompleteActivities() {
-            incompleteList.innerHTML = '';
-            let yesterday = new Date(currentDisplayDate);
-            yesterday.setDate(yesterday.getDate() - 1);
-            if (yesterday.getDay() === 0) { yesterday.setDate(yesterday.getDate() - 2); } 
-            else if (yesterday.getDay() === 6) { yesterday.setDate(yesterday.getDate() - 1); }
-            
-            let hasIncomplete = false;
-            const checkAndRender = (date) => {
-                const dateKey = formatDateKey(date);
-                const activities = getActivitiesForDate(date);
+            const allIncompleteTasks = [];
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Normalize to start of today
+            const startDate = new Date(2025, 6, 1); // July 1, 2025
+
+            for (let d = new Date(startDate); d < today; d.setDate(d.getDate() + 1)) {
+                const dateKey = formatDateKey(d);
+                const activities = getActivitiesForDate(new Date(d));
                 activities.forEach((activity, index) => {
                     const activityId = `${dateKey}-${index}`;
                     if (!activityStatus[activityId]) {
-                        hasIncomplete = true;
-                        const card = createActivityCard(activity, activityId, false, true);
-                        incompleteList.appendChild(card);
+                        allIncompleteTasks.push({ activity, activityId, date: new Date(d) });
                     }
                 });
-            };
-            checkAndRender(yesterday);
-            incompleteContainer.style.display = hasIncomplete ? 'block' : 'none';
+            }
+
+            incompleteList.innerHTML = '';
+            if (allIncompleteTasks.length > 0) {
+                incompleteContainer.style.display = 'block';
+                if (allIncompleteTasks.length > 3) {
+                    incompleteList.innerHTML = `
+                        <div class="text-center p-4 bg-red-50 rounded-lg">
+                            <p class="font-semibold text-red-700">You have ${allIncompleteTasks.length} pending activities.</p>
+                            <button id="show-all-pending" class="mt-2 text-sm text-blue-600 hover:underline font-bold">Show All</button>
+                        </div>
+                    `;
+                    document.getElementById('show-all-pending').onclick = () => {
+                        renderFullIncompleteList(allIncompleteTasks);
+                    };
+                } else {
+                    renderFullIncompleteList(allIncompleteTasks);
+                }
+            } else {
+                incompleteContainer.style.display = 'none';
+            }
+        }
+        
+        function renderFullIncompleteList(tasks) {
+            incompleteList.innerHTML = '';
+            tasks.forEach(taskInfo => {
+                const card = createActivityCard(taskInfo.activity, taskInfo.activityId, false, true);
+                const dateEl = document.createElement('p');
+                dateEl.className = 'text-xs text-red-500 font-semibold mt-1';
+                dateEl.textContent = taskInfo.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                card.querySelector('div').appendChild(dateEl);
+                incompleteList.appendChild(card);
+            });
         }
 
         function createActivityCard(activity, activityId, isCompleted, isPending = false, isCustom = false) {
@@ -189,7 +215,7 @@
             card.className = `activity-card bg-white p-4 rounded-lg shadow-sm border-l-4 ${isCompleted ? 'completed' : ''} ${isPending ? 'bg-red-50' : ''}`;
             card.style.borderLeftColor = isPending && !isCompleted ? '#ef4444' : getCategoryColor(activity.cat || 'Custom');
             card.innerHTML = `<div class="flex justify-between items-start"><div class="flex-1 min-w-0"><div class="flex items-center">${isCompleted ? '<span class="star-icon mr-2">⭐</span>' : ''}<h3 class="font-bold text-lg activity-title">${activity.title || activity.cat}</h3></div><p class="text-gray-600 truncate activity-desc">${activity.desc}</p></div><div class="flex items-center ml-4 flex-shrink-0">${activity.link ? `<a href="${activity.link}" target="_blank" onclick="event.stopPropagation()" class="p-2 text-gray-400 hover:text-blue-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" /></svg></a>` : ''}${isCustom ? `<button onclick="deleteCustomTask(event, '${activityId}')" class="p-2 text-gray-400 hover:text-red-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg></button>` : ''}<input type="checkbox" class="form-checkbox h-6 w-6 rounded text-blue-500 ml-2" onclick="handleCheckboxClick(event, '${activityId}', ${isCustom})" ${isCompleted ? 'checked' : ''}></div></div>`;
-            card.onclick = () => openModal('activity-modal', activity.title || activity.cat, activity.desc);
+            card.onclick = () => window.openModal('activity-modal', activity.title || activity.cat, activity.desc);
             return card;
         }
 
@@ -242,7 +268,7 @@
                 a.onclick = (e) => {
                     e.preventDefault();
                     const monthIndex = new Date(Date.parse(month +" 1, 2025")).getMonth();
-                    const year = monthIndex >= 6 ? 2025 : 2026; // July onwards is 2025 for this school year
+                    const year = monthIndex >= 6 ? 2025 : 2026;
                     currentDisplayDate = new Date(year, monthIndex, 1);
                     showCalendarView();
                     toggleSidebar();
@@ -263,7 +289,6 @@
             }
         }
 
-        // --- Firebase Functions ---
         async function toggleActivity(activityId, isCustom = false) {
             const currentStatus = activityStatus[activityId] || false;
             const newStatus = !currentStatus;
@@ -312,7 +337,6 @@
             }
         }
 
-        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             initFirebase();
             renderSidebar();
